@@ -10,7 +10,7 @@
 
 #define JSON_NAME "World Editor.json"
 
-HMODULE hWE = GetModuleHandle("worldedit.exe");
+HMODULE hWE = GetModuleHandle(NULL);
 HMODULE hStorm = GetModuleHandle("storm.dll");
 
 rapidjson::Document doc;
@@ -28,7 +28,7 @@ LSTATUS CALLBACK BLZSRegSetValueString_Proxy(LPCSTR lpPath, LPCSTR lpValueName, 
 BOOL WINAPI DllMain(HMODULE hModule, UINT ul_reason_for_call, LPVOID)
 {
 	if (ul_reason_for_call == DLL_PROCESS_ATTACH)
-		if (hWE)
+		if (!GetModuleHandle("game.dll"))
 		{
 			Exploit(hWE, hStorm, (LPCSTR)423, BLZSRegQueryValueDword_Proxy);
 			Exploit(hWE, hStorm, (LPCSTR)422, BLZSRegQueryValueString_Proxy);
